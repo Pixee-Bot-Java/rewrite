@@ -295,7 +295,7 @@ public class WriteModel extends Recipe {
             }
             JavaType.FullyQualified type = TypeUtils.asFullyQualified(((J.VariableDeclarations) statement).getType());
             assert type != null;
-            return type.getClassName().contains("Padded") || type.getClassName().equals("TomlContainer");
+            return type.getClassName().contains("Padded") || "TomlContainer".equals(type.getClassName());
         }
     };
 
@@ -305,7 +305,7 @@ public class WriteModel extends Recipe {
             @Override
             public J.Block visitBlock(J.Block block, ExecutionContext ctx) {
                 Object parent = getCursor().getParentOrThrow().getValue();
-                if (!(parent instanceof J.ClassDeclaration) || !((J.ClassDeclaration) parent).getSimpleName().equals("Toml")) {
+                if (!(parent instanceof J.ClassDeclaration) || !"Toml".equals(((J.ClassDeclaration) parent).getSimpleName())) {
                     return block;
                 }
 

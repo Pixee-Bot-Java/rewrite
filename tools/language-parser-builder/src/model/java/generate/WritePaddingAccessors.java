@@ -72,7 +72,7 @@ public class WritePaddingAccessors extends Recipe {
         public J.ClassDeclaration visitClassDeclaration(J.ClassDeclaration classDecl, ExecutionContext ctx) {
             J.ClassDeclaration c = classDecl;
 
-            if (c.getSimpleName().equals("Padding")) {
+            if ("Padding".equals(c.getSimpleName())) {
                 for (Statement statement : modelClassDeclaration.getBody().getStatements()) {
                     if (statement instanceof J.VariableDeclarations varDec) {
                         JavaType.FullyQualified fqn = TypeUtils.asFullyQualified(varDec.getType());
@@ -133,7 +133,7 @@ public class WritePaddingAccessors extends Recipe {
             @Override
             public J.Block visitBlock(J.Block block, ExecutionContext ctx) {
                 Object parent = getCursor().getParentOrThrow().getValue();
-                if (!(parent instanceof J.ClassDeclaration) || !((J.ClassDeclaration) parent).getSimpleName().equals("Toml")) {
+                if (!(parent instanceof J.ClassDeclaration) || !"Toml".equals(((J.ClassDeclaration) parent).getSimpleName())) {
                     return block;
                 }
 

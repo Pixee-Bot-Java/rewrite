@@ -79,7 +79,7 @@ public class WritePrinter extends Recipe {
                                     break;
                                 case "List":
                                     String loopVar = paramName.substring(0, 1);
-                                    if (loopVar.equals("p")) {
+                                    if ("p".equals(loopVar)) {
                                         loopVar = "pp";
                                     }
                                     String typeParam = ((J.Identifier) requireNonNull(((J.ParameterizedType) varDec.getTypeExpression()).getTypeParameters()).get(0)).getSimpleName();

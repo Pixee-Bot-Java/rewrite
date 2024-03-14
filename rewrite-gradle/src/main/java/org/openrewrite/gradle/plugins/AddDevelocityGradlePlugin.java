@@ -157,7 +157,7 @@ public class AddDevelocityGradlePlugin extends Recipe {
                     }
                     GradleSettings gradleSettings = maybeGradleSettings.get();
                     cu = withPlugin(cu, "com.gradle.enterprise", versionComparator, null, gradleSettings, ctx);
-                } else if (!gradleSixOrLater && cu.getSourcePath().toString().equals("build.gradle")) {
+                } else if (!gradleSixOrLater && "build.gradle".equals(cu.getSourcePath().toString())) {
                     // Older than 6.0 goes in root build.gradle only, not in build.gradle of subprojects
                     Optional<GradleProject> maybeGradleProject = cu.getMarkers().findFirst(GradleProject.class);
                     if (!maybeGradleProject.isPresent()) {
@@ -209,7 +209,7 @@ public class AddDevelocityGradlePlugin extends Recipe {
 
             @Override
             public J.MethodInvocation visitMethodInvocation(J.MethodInvocation method, AtomicBoolean atomicBoolean) {
-                if (method.getSimpleName().equals("gradleEnterprise")) {
+                if ("gradleEnterprise".equals(method.getSimpleName())) {
                     atomicBoolean.set(true);
                 }
                 return super.visitMethodInvocation(method, atomicBoolean);
