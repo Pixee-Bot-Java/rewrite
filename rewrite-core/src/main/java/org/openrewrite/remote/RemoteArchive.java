@@ -15,6 +15,7 @@
  */
 package org.openrewrite.remote;
 
+import io.github.pixee.security.ZipSecurity;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 import lombok.With;
@@ -112,7 +113,7 @@ public class RemoteArchive implements Remote {
     }
 
     private @Nullable InputStream readIntoArchive(InputStream body, List<String> paths, int index) {
-        ZipInputStream zis = new ZipInputStream(body);
+        ZipInputStream zis = ZipSecurity.createHardenedInputStream(body);
         Pattern pattern = Pattern.compile(paths.get(index));
 
         try {
