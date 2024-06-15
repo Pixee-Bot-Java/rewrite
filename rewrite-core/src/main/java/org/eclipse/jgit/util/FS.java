@@ -10,6 +10,7 @@
 
 package org.eclipse.jgit.util;
 
+import io.github.pixee.security.BoundedLineReader;
 import org.eclipse.jgit.annotations.NonNull;
 import org.eclipse.jgit.annotations.Nullable;
 import org.eclipse.jgit.api.errors.JGitInternalException;
@@ -1358,12 +1359,12 @@ public abstract class FS {
 			String r = null;
 			try (BufferedReader lineRead = new BufferedReader(
 					new InputStreamReader(p.getInputStream(), encoding))) {
-				r = lineRead.readLine();
+				r = BoundedLineReader.readLine(lineRead, 5_000_000);
 				if (debug) {
 					LOG.debug("readpipe may return '" + r + "'"); //$NON-NLS-1$ //$NON-NLS-2$
 					LOG.debug("remaining output:\n"); //$NON-NLS-1$
 					String l;
-					while ((l = lineRead.readLine()) != null) {
+					while ((l = BoundedLineReader.readLine(lineRead, 5_000_000)) != null) {
 						LOG.debug(l);
 					}
 				}
