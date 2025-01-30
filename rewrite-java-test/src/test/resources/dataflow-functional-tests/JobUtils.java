@@ -23,6 +23,7 @@
  */
 package com.intuit.karate.job;
 
+import io.github.pixee.security.ZipSecurity;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -87,7 +88,7 @@ public class JobUtils {
     public static void unzip(File src, File dest) {
         try {
             byte[] buffer = new byte[1024];
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(src));
+            ZipInputStream zis = ZipSecurity.createHardenedInputStream(new FileInputStream(src));
             ZipEntry zipEntry = zis.getNextEntry();
             while (zipEntry != null) {
                 File newFile = createFile(dest, zipEntry);
