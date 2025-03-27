@@ -15,6 +15,7 @@
  */
 package org.openrewrite.quark;
 
+import io.github.pixee.security.BoundedLineReader;
 import org.openrewrite.ExecutionContext;
 import org.openrewrite.InMemoryExecutionContext;
 import org.openrewrite.Parser;
@@ -93,7 +94,7 @@ public class QuarkParser implements Parser {
                  BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
                 List<PathMatcher> gitignorePaths = new ArrayList<>();
                 String line;
-                while ((line = reader.readLine()) != null) {
+                while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                     if (!line.trim().startsWith("#") && !StringUtils.isBlank(line)) {
                         gitignorePaths.add(gitignore.toPath().getFileSystem().getPathMatcher("glob:**/" + line.trim() +
                                                                                              (line.trim().endsWith("/") ? "**" : "")));
